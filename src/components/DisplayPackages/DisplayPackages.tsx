@@ -1,34 +1,58 @@
 import "./DisplayPackages.css"
 import OnePackage from "../OnePackage/OnePackage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { PackageData } from "../OnePackage/OnePackage";
 
-const DisplayPackages = () => {
+interface DisplayPackagesProps {
+    packageSent?: PackageData[];
+    fetchFunc?: () => void;
+}
+
+const DisplayPackages = ({ packageSent, fetchFunc }: DisplayPackagesProps) => {
 
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [searchOption, setSearchOption] = useState<boolean>(true);
+    const [fileteredPackages, setFilteredPackages] = useState<PackageData[]>();
+
+    useEffect(() => {
+        setFilteredPackages(packageSent);
+    }, [packageSent]);
 
     const handleSearchChangeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.match(/[a-zA-Z]/g)) {
-            setSearchTerm("");
             return;
         }
         setSearchTerm(e.target.value);
-        console.log("Search term changed to:", e.target.value);
+        const filtered = packageSent?.filter((onePackage) => {
+            return onePackage.trackingNumber.toString().startsWith(e.target.value);
+        });
+        setFilteredPackages(filtered);
+        if (e.target.value === "") {
+            setFilteredPackages(packageSent);
+        } 
     }
 
     const handleSearchChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSearchTerm(e.target.value)
-        console.log("Search term changed to:", e.target.value);
+        const filtered = packageSent?.filter((onePackage) => {
+            return onePackage.currentStatus[0].toLowerCase() === e.target.value.toLowerCase();
+        });
+        setFilteredPackages(filtered);
+        if (e.target.value === "") {
+            setFilteredPackages(packageSent);
+        }   
     }
 
     const handleSearchOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if(e.target.value === "trackingOption") {
             setSearchOption(true);
             setSearchTerm("");
+            setFilteredPackages(packageSent);
         }
         else if(e.target.value === "statusOption") {
             setSearchOption(false);
             setSearchTerm("");
+            setFilteredPackages(packageSent);
         }
         else{
             return;
@@ -65,26 +89,11 @@ const DisplayPackages = () => {
                 <h3 className="packageHeader">Change status</h3>
             </div>
             <div className="packagesList">
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
-                <OnePackage />
+                {
+                    (fileteredPackages ?? []).map((onePackage: PackageData, i) => (
+                        <OnePackage key={i} onePackageData={onePackage} fetchFunc={fetchFunc ?? (() => {})}/>
+                    ))
+                }
             </div>   
         </div>
     )

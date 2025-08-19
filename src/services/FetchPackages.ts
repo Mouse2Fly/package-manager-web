@@ -6,9 +6,7 @@ const FetchPackages = async () => {
         throw new Error(`Error fetching places`);
     }
 
-
     return data;
-
 }
 
 export default FetchPackages;

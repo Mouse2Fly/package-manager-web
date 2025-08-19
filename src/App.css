@@ -8,7 +8,62 @@
     background-color: #fd6913;
     padding: 20px;
     text-align: center;
-    color: white;
     display: flex;
     width: 100%;
+    display: flex;
+    height: 80px;
+}
+
+.webName{
+    color: #fff;
+    margin-left: 4%;
+}
+
+.headerLinks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    margin: 0 0 0 auto
+}
+
+.homePageLink{
+    border: 3px solid #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #fd6913;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 3rem;
+    transition: 0.1s;
+    width: 7rem;
+    font-size: 20px;
+}
+
+.homePageLink:hover {
+    background-color: #ff8f44;
+}
+.homePageLink:active {
+    background-color: #77360a;
+}
+
+.createPageLink{
+    border: 3px solid #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #fd6913;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.1s;
+    width: 7rem;
+    font-size: 20px;
+}
+
+.createPageLink:hover {
+    background-color: #ff8f44;
+}
+.createPageLink:active {
+    background-color: #77360a;
 }

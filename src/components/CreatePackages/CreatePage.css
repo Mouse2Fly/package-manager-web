@@ -1,0 +1,160 @@
+.createPackages{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.createForm{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    padding: 20px;
+    border: 3px solid #dadada;
+    border-radius: 25px;
+    margin: 50px auto 50px auto;
+
+}
+
+.contextbox{
+    margin-top: 50px;
+    background-color: rgb(243, 53, 53);
+    border: 4px solid #7e0000;
+    padding: 40px 20px 40px 20px;
+    border-radius: 25px;
+    width: 40%;
+    height: 20vh;;
+}
+
+.contextText{
+    color: #fff;
+    font-size: 25px;
+    text-align: center;
+    text-decoration: uppercase;
+}
+
+.senderDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.recipientDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.senderName{
+    width: 500px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.senderNameLabel{
+    margin-bottom: 5px;
+}
+
+.senderAddress{
+    width: 500px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.senderAddressLabel{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.senderPhone{
+    width: 500px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.senderPhoneLabel{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.recipientName{
+    width: 500px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.recipientNameLabel{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.recipientAddress{
+    width: 500px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.recipientAddressLabel{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.recipientPhone{
+    width: 500px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.recipientPhoneLabel{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.createBtn{
+    background-color: #fd6913;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.createBtn:hover{
+    background-color: #ff8f44;
+}
+
+.createBtn:active{
+    background-color: #77360a;
+}
+
+.hideHole{
+    opacity: 0;
+}
