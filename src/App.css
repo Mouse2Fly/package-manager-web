@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Mulish_Variable_Wght", sans-serif;
 }
 
 .header {
@@ -67,3 +68,4 @@
 .createPageLink:active {
     background-color: #77360a;
 }
+

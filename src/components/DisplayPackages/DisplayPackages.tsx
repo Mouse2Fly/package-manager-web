@@ -2,6 +2,7 @@ import "./DisplayPackages.css"
 import OnePackage from "../OnePackage/OnePackage";
 import { useEffect, useState } from "react";
 import type { PackageData } from "../OnePackage/OnePackage";
+import ChangeState from '../../services/ChangeState';
 
 interface DisplayPackagesProps {
     packageSent?: PackageData[];
@@ -14,9 +15,26 @@ const DisplayPackages = ({ packageSent, fetchFunc }: DisplayPackagesProps) => {
     const [searchOption, setSearchOption] = useState<boolean>(true);
     const [fileteredPackages, setFilteredPackages] = useState<PackageData[]>();
 
+    const [newStatus, setNewStatus] = useState<string>("");
+    const [packageID, setPackageID] = useState<number>(0);
+
     useEffect(() => {
         setFilteredPackages(packageSent);
     }, [packageSent]);
+
+    const statusAPI = async (newStatus: string, packageID: number) => {
+        const response = await ChangeState(newStatus, packageID);
+
+        if (response && response.status === 200) {
+            //console.log("Response from ChangeState:", response);
+            if (fetchFunc) {
+                fetchFunc();
+            }
+
+        } else {
+            return;
+        }
+    }
 
     const handleSearchChangeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.match(/[a-zA-Z]/g)) {
@@ -59,8 +77,37 @@ const DisplayPackages = ({ packageSent, fetchFunc }: DisplayPackagesProps) => {
         }
     }
 
+    const handleConfirm = async(e: React.MouseEvent<HTMLButtonElement>) => {
+        const confirm = e.currentTarget.value === "true";
+        if (confirm) {
+
+            const confirmBox = document.querySelector(".confirmBox2");
+            confirmBox!.classList.add("hideConfirmBox");
+
+            statusAPI(newStatus, packageID);
+        } else {
+
+            const confirmBox = document.querySelector(".confirmBox2");
+            confirmBox!.classList.add("hideConfirmBox");
+        }
+    }
+
+    const showConfirmBox = () => {
+        const confirmBox = document.querySelector(".confirmBox2");
+        confirmBox!.classList.remove("hideConfirmBox");
+    }
+
     return (
         <div className='mainDisplay'>
+            <div className="confirmBox2 hideConfirmBox">
+                <div className="confirmTextBox">
+                    <h3 className="confirmText">Are you sure?</h3>
+                    <div className="choiceBtns">
+                        <button value={"true"} onClick={handleConfirm} className="confirmBtn">Yes</button>
+                        <button value={"false"} onClick={handleConfirm} className="cancelBtn">No</button>
+                    </div>
+                </div>
+            </div>
             <div className="searchBarContainer">
                 <select className="searchSelect" onChange={(e)=>handleSearchOptionChange(e)}>
                     <option value="trackingOption">Tracking Number</option>
@@ -78,7 +125,6 @@ const DisplayPackages = ({ packageSent, fetchFunc }: DisplayPackagesProps) => {
                         <option value="canceled">Canceled</option>
                     </select>
                 )}
-                {/* <button className="searchButton">Search</button> */}
             </div>
             <div className="headerInfo">
                 <h3 className="packageHeader numberHeader">Tracking number</h3>
@@ -91,10 +137,10 @@ const DisplayPackages = ({ packageSent, fetchFunc }: DisplayPackagesProps) => {
             <div className="packagesList">
                 {
                     (fileteredPackages ?? []).map((onePackage: PackageData, i) => (
-                        <OnePackage key={i} onePackageData={onePackage} fetchFunc={fetchFunc ?? (() => {})}/>
+                        <OnePackage key={i} onePackageData={onePackage} showConfirmBox={showConfirmBox} statusState={setNewStatus} packageIDState={setPackageID}/>
                     ))
                 }
-            </div>   
+            </div>  
         </div>
     )
 

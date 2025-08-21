@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
 }
 
 .createForm{
@@ -157,4 +157,72 @@
 
 .hideHole{
     opacity: 0;
+}
+
+.confirmBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0; 
+    z-index: 1000;
+}
+
+.confirmTextBox{
+    background-color: #fd6913;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.confirmText{
+    color: #fff;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.choiceBtns{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.confirmBtn{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+.confirmBtn:hover{
+    background-color: #41e665;
+}
+.confirmBtn:active{
+    background-color: #218838;
+}
+
+.cancelBtn{
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+}  
+.cancelBtn:hover{
+    background-color: #dd505e;
+}
+.cancelBtn:active{
+    background-color: #c82333;
+} 
+
+.hideConfirmBox{
+    display: none;
 }

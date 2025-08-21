@@ -59,7 +59,7 @@ const CreatePage = () => {
         if (!senderAddress || !senderName || !senderPhone || !recipientAddress || !recipientName || !recipientPhone) {
             const contextBox = document.querySelector(".contextbox");
             contextBox!.classList.remove("hideHole");
-            document.querySelector(".contextText")!.textContent = "All fields are required.";
+            document.querySelector(".contextText")!.textContent = "All fields must be filled.";
             return;
         }
 
@@ -67,7 +67,7 @@ const CreatePage = () => {
             const response = await CreatePackage(senderAddress, senderName, senderPhone, recipientAddress, recipientName, recipientPhone);
 
             if (response && response.status === 201) {
-                console.log("Package created successfully:", response.data);
+                //console.log("Package created successfully:", response.data);
 
                 setSenderAddress("");
                 setSenderName("");
@@ -76,7 +76,7 @@ const CreatePage = () => {
                 setRecipientName("");
                 setRecipientPhone("");
 
-                console.log("Response from CreatePackage:", response);
+                //console.log("Response from CreatePackage:", response);
                 const contextBox = document.querySelector(".contextbox");
                 contextBox!.classList.add("hideHole");
                 document.querySelector(".contextText")!.textContent = "";
@@ -93,6 +93,32 @@ const CreatePage = () => {
             contextBox!.classList.remove("hideHole");
             document.querySelector(".contextText")!.textContent = "Package creation failed. Check the input data.";
         }
+    }
+
+    const handleConfirm = async(e: React.MouseEvent<HTMLButtonElement>) => {
+        const confirm = e.currentTarget.value === "true";
+        if (confirm) {
+            const contextBox = document.querySelector(".contextbox");
+            contextBox!.classList.add("hideHole");
+            document.querySelector(".contextText")!.textContent = "";
+
+            const confirmBox = document.querySelector(".confirmBox");
+            confirmBox!.classList.add("hideConfirmBox");
+
+            handleCreatePackage();
+        } else {
+            const contextBox = document.querySelector(".contextbox");
+            contextBox!.classList.add("hideHole");
+            document.querySelector(".contextText")!.textContent = "";
+
+            const confirmBox = document.querySelector(".confirmBox");
+            confirmBox!.classList.add("hideConfirmBox");
+        }
+    }
+
+    const showConfirmBox = () => {
+        const confirmBox = document.querySelector(".confirmBox");
+        confirmBox!.classList.remove("hideConfirmBox");
     }
 
     return (
@@ -164,7 +190,16 @@ const CreatePage = () => {
                     />
                 </div>
             </form>
-            <button onClick={handleCreatePackage} className="createBtn">Create Package</button>
+            <button onClick={showConfirmBox} className="createBtn">Create Package</button>
+            <div className="confirmBox hideConfirmBox">
+                <div className="confirmTextBox">
+                    <h3 className="confirmText">Are you sure?</h3>
+                    <div className="choiceBtns">
+                        <button value={"true"} onClick={handleConfirm} className="confirmBtn">Yes</button>
+                        <button value={"false"} onClick={handleConfirm} className="cancelBtn">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

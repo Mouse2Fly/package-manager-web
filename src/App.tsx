@@ -6,6 +6,8 @@ import DisplayPackages from './components/DisplayPackages/DisplayPackages';
 import type { PackageData } from './components/OnePackage/OnePackage';
 import CreatePackages from './components/CreatePackages/CreatePage';
 import { Link } from 'react-router-dom';
+import InspectPackages from './components/InspectPackages/InspectPackages';
+import "./assets/Mulish/Mulish-VariableFont_wght.ttf"
 
 function App() {
 
@@ -15,7 +17,7 @@ function App() {
         try {
             const Response = await FetchPackages();
             console.log(Response);
-            console.log("Places Package Data successfully");
+            //console.log("Places Package Data successfully");
             setPackages(Response);
         } catch (error) {
             console.error("Error fetching Package Data:", error);
@@ -29,7 +31,7 @@ function App() {
   return (
         <Router>
             <div className='header'>
-                <h1 className='webName'>Package Manager</h1>
+                <h1 className='webName'>Super Package Tracking</h1>
                 <div className='headerLinks'>
                     <Link to="/" className='homePageLink' onClick={getPackageData}>Home</Link>
                     <Link to="/create" className='createPageLink'>Create</Link>
@@ -38,6 +40,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<DisplayPackages packageSent={packages} fetchFunc={getPackageData} />} />
                 <Route path="/create" element={<CreatePackages />} />
+                <Route path="/inspect" element={<InspectPackages />} />
             </Routes>
         </Router>
   )

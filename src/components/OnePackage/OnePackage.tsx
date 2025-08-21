@@ -1,6 +1,6 @@
 import './OnePackage.css'
 import { useState, useEffect } from 'react';
-import ChangeState from '../../services/ChangeState';
+import { useNavigate } from 'react-router-dom';
 
 interface PackageData {
     trackingNumber: number;
@@ -17,10 +17,14 @@ interface PackageData {
 
 interface OnePackageProps {
     onePackageData: PackageData;
-    fetchFunc: () => void;
+    showConfirmBox: () => void;
+    packageIDState: (id: number) => void;
+    statusState: (status: string) => void;
 }
 
-const OnePackage = ({ onePackageData, fetchFunc }: OnePackageProps) => {
+const OnePackage = ({ onePackageData, showConfirmBox, statusState, packageIDState }: OnePackageProps) => {
+
+    const navigate = useNavigate();
 
     const [stateMode, setStateMode] = useState<string>("created");
 
@@ -28,17 +32,6 @@ const OnePackage = ({ onePackageData, fetchFunc }: OnePackageProps) => {
         setStateMode(onePackageData.currentStatus[0].toLowerCase());
     }, [onePackageData]);
     
-    const statusAPI = async (newStatus: string, packageID: number) => {
-        const response = await ChangeState(newStatus, packageID);
-
-        if (response && response.status === 200) {
-            console.log("Response from ChangeState:", response);
-            fetchFunc(); // Refresh package data after state change
-
-        } else {
-            return;
-        }
-    }
 
     const extraPackageInfo = () => {
 
@@ -56,6 +49,8 @@ const OnePackage = ({ onePackageData, fetchFunc }: OnePackageProps) => {
                 onePackage.classList.remove("active");
             });
         });
+
+        navigate("/inspect", { state: { onePackageData } });
     }
 
     interface ChangePackageStatusEvent extends React.MouseEvent<HTMLButtonElement> {
@@ -71,7 +66,9 @@ const OnePackage = ({ onePackageData, fetchFunc }: OnePackageProps) => {
                 event.stopPropagation(); // Prevent triggering the parent .onePackage
             });
         });
-        statusAPI(e.target.value, onePackageData.trackingNumber);
+        statusState(e.target.value);
+        packageIDState(onePackageData.trackingNumber);
+        showConfirmBox();
     }
 
     const changeStateText = () => {
@@ -100,7 +97,7 @@ const OnePackage = ({ onePackageData, fetchFunc }: OnePackageProps) => {
         if (stateMode === "sent") {    
             return(
                 <div className='onePackageBtns'>
-                    <button value={"Sent"} className="statusButton statusAccepted" onClick={changePackageStatus}>Accepted</button>
+                    <button value={"Accepted"} className="statusButton statusAccepted" onClick={changePackageStatus}>Accepted</button>
                     <button value={"Returned"} className="statusButton statusReturned" onClick={changePackageStatus}>Returned</button>
                     <button value={"Canceled"} className="statusButton statusCanceled" onClick={changePackageStatus}>Canceled</button>
                 </div>
